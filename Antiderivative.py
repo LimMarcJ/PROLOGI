@@ -1,13 +1,12 @@
 def parse_algebraic(expr):
-    expr = expr.strip().replace(" ", "")
-    terms = expr.split("+")
+    terms = expr.split("+") #In this case, the "+" is the delimiter, so in the cases that the expression is "a+b+c", the split function will return a list of three strings: "a", "b", "c". 
     results = []
-
-    for term in terms:
+    
+    for term in terms: 
         if "^" in term:
             before_exp, exp_str = term.split("^")
             exponent = int(exp_str)
-            if before_exp[-1].isalpha():
+            if before_exp[-1]:
                 var = before_exp[-1]
                 coef_str = before_exp[:-1]
                 coef = int(coef_str) if coef_str else 1
@@ -16,7 +15,7 @@ def parse_algebraic(expr):
                 coef = int(before_exp)
         else:
             exponent = 1
-            if term[-1].isalpha():
+            if term[-1]:
                 var = term[-1]
                 coef_str = term[:-1]
                 coef = int(coef_str) if coef_str else 1
@@ -43,28 +42,23 @@ def integrate(coefficients, variables, exponents):
 
     return " + ".join(integrated_terms) + " + C"
 
-def main_antiderivative():
-    #Get lang yung user input dito
-    print("\n=====================================")
-    print("     ANTIDERIVATIVE CALCULATOR")
-    print("=====================================")
-    user_inp = input("Enter your algebraic expression (e.g., 'x^2 + 2x + 3'): ")
-    parsed = parse_algebraic(user_inp)
-    #Then irrun yung buong define function based dito sa "parsed"
-    coefficients = []
-    variables = []
-    exponents = []
-    #This three lists will be stored as variables
-    for term in parsed:
-        coef, var, exp = term
-        coefficients.append(coef)
-        variables.append(var)
-        exponents.append(exp)
+#Get lang yung user input dito
+user_inp = input("Enter your algebraic expression (e.g., 'x^2 + 2x + 3'): ")
+parsed = parse_algebraic(user_inp)
+#Then irrun yung buong define function based dito sa "parsed"
+coefficients = []
+variables = []
+exponents = []
+#This three lists will be stored as variables
+for term in parsed:
+    coef, var, exp = term
+    coefficients.append(coef)
+    variables.append(var)
+    exponents.append(exp)
 
-    integrated_func = integrate(coefficients, variables, exponents)
+integrated_func = integrate(coefficients, variables, exponents)
 
-    print("Coefficients:", coefficients)
-    print("Variables:", variables)
-    print("Exponents:", exponents)
-    print("Integrated Function:", integrated_func)
-    input("\nPress Enter to return to the main menu...")
+print("Coefficients:", coefficients)
+print("Variables:", variables)
+print("Exponents:", exponents)
+print("Integrated Function:", integrated_func)
